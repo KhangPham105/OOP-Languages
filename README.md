@@ -86,3 +86,57 @@ Animal a = new Dog();
 a.speak();   // Dog ✅
 
 ```
+
+### 2. Phân tích từ khóa "virtual", và lý do chỉ có trong C++ mới sử dụng
+
+Trong C++ OOP, từ khóa `virtual` dùng để hỗ trợ đa hình (polymorphism), cụ thể hơn là 
+hàm nào được gọi sẽ phụ thuộc vào đối tượng thật mà con trỏ đang trỏ tới, chứ không phải kiểu của con trỏ
+
+Cho ví dụ: ta có 2 class Animal và Dog, trong đó class Dog kế thừa từ Animal, cả 2 cùng có phương thức `speak()`. Xét chung đoạn code trong hàm `main()` là :
+
+```
+Animal* a = new Dog();
+a->speak();
+```
+
+- Trường hợp 1: phương thức `speak()` của class Animal không được khai báo virtual, và class Dog cũng không override phương thức này
+➡️ Khi gọi `speak()` thì `speak()` của Animal sẽ được gọi
+- Trường hợp 2: phương thức `speak()` của class Animal được khai báo virtual và bên trong class Dog phương thức này được override
+➡️ Khi gọi `speak()` thì `speak()` của Dog sẽ được gọi
+
+📌 Nguyên nhân của vấn đề này là vì C++ quyết định hàm ngay lúc biên dịch (compile time), trong C++ có bảng hàm ảo (vtable) cho mỗi class; khi gọi hàm `virtual`, C++ tra vtable 👉 gọi đúng hàm
+
+💡`virtual destructor` rất quan trọng trong C++ OOP, nếu xóa object qua con trỏ base class mà destructor không virtual ➡️ memory leak / undefined behavior
+
+### 3. Abstract class và Interface
+
+3.1 Abstract class là class không thể tạo object, dùng làm lớp cha, có thể:
+
+- Có hàm ảo thuần (=0)    `virtual double area() = 0;`
+- Có hàm thường 
+- Có biến thành viên
+- Có constructor
+
+📌 Nếu một class con kế thừa từ Abstract class, **bắt buộc** phải override các phương thức thuần ảo 
+
+3.2 Interface 
+
+Trong C++ không có từ khóa interface như Java, mà Interface trong C++ được giả lập bằng abstract class đặc biệt, gồm các đặc điểm:
+- Tất cả hàm đều là `pure virtual`
+- Không có biến thành viên
+- Không có code xử lý
+- Dùng để định nghĩa hành vi
+
+```
+class Flyable {
+public:
+    virtual void fly() = 0;
+    virtual ~Flyable() {}
+};
+class Bird : public Flyable {
+public:
+    void fly() override {
+        cout << "Bird flying\n";
+    }
+};
+```
