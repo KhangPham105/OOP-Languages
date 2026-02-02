@@ -107,36 +107,3 @@ a->speak();
 📌 Nguyên nhân của vấn đề này là vì C++ quyết định hàm ngay lúc biên dịch (compile time), trong C++ có bảng hàm ảo (vtable) cho mỗi class; khi gọi hàm `virtual`, C++ tra vtable 👉 gọi đúng hàm
 
 💡`virtual destructor` rất quan trọng trong C++ OOP, nếu xóa object qua con trỏ base class mà destructor không virtual ➡️ memory leak / undefined behavior
-
-### 3. Abstract class và Interface
-
-3.1 Abstract class là class không thể tạo object, dùng làm lớp cha, có thể:
-
-- Có hàm ảo thuần (=0)    `virtual double area() = 0;`
-- Có hàm thường 
-- Có biến thành viên
-- Có constructor
-
-📌 Nếu một class con kế thừa từ Abstract class, **bắt buộc** phải override các phương thức thuần ảo 
-
-3.2 Interface 
-
-Trong C++ không có từ khóa interface như Java, mà Interface trong C++ được giả lập bằng abstract class đặc biệt, gồm các đặc điểm:
-- Tất cả hàm đều là `pure virtual`
-- Không có biến thành viên
-- Không có code xử lý
-- Dùng để định nghĩa hành vi
-
-```
-class Flyable {
-public:
-    virtual void fly() = 0;
-    virtual ~Flyable() {}
-};
-class Bird : public Flyable {
-public:
-    void fly() override {
-        cout << "Bird flying\n";
-    }
-};
-```
