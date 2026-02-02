@@ -107,3 +107,51 @@ a->speak();
 📌 Nguyên nhân của vấn đề này là vì C++ quyết định hàm ngay lúc biên dịch (compile time), trong C++ có bảng hàm ảo (vtable) cho mỗi class; khi gọi hàm `virtual`, C++ tra vtable 👉 gọi đúng hàm
 
 💡`virtual destructor` rất quan trọng trong C++ OOP, nếu xóa object qua con trỏ base class mà destructor không virtual ➡️ memory leak / undefined behavior
+
+## Abstract và Interface trong OOP
+
+### Abstract class là gì?
+
+Abstract class là lớp chưa hoàn chỉnh, không thể tạo đối tượng trực tiếp, dùng để làm lớp cha.
+
+Đặc điểm:
+
+- Khai báo bằng từ khóa abstract
+
+- Có thể chứa:
+
+  - Abstract method (chưa có thân hàm)
+
+  - Method bình thường (có code)
+
+  - Thuộc tính
+
+- Class con bắt buộc override tất cả abstract method
+
+🐲 Khi khai báo một class là `abstract`, chỉ một số phương thức là `abstract` thì ở class con ta chỉ cần triển khai các phương thức được đánh dấu là abstract thôi.
+
+📌 Nguyên nhân cho điều trên là class abstract cha có thể có cả abstract method và method được triển khai bình thường. Class con chỉ bắt buộc override các method được đánh dấu là abstract, còn các method thường có thể dùng lại hoặc override
+
+👉 **KHÔNG ĐƯỢC** tạo object (new) từ abstract class
+
+### Interface là gì?
+
+Interface là bản hợp đồng (contract) – class nào implement thì phải làm đúng những gì đã hứa.
+
+Đặc điểm:
+
+- Khai báo bằng interface
+
+- Mặc định:
+
+  - Method là public abstract
+
+  - Biến là public static final
+
+- Không có constructor
+
+- Không có thuộc tính instance
+
+- Một class có thể implement nhiều interface **(rất quan trọng)**
+
+📌 Trong trường hợp class con là class thường bắt buộc phải override tất cả các method của interface. Một trường hợp khác, class con implement interface nhưng bản thân nó cũng là abstract thì không cần thiết phải triển khai hết mà có thể để class con phía dưới làm tiếp.  
