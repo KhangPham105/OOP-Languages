@@ -132,7 +132,7 @@ Abstract class là lớp chưa hoàn chỉnh, không thể tạo đối tượng
 
 📌 Nguyên nhân cho điều trên là class abstract cha có thể có cả abstract method và method được triển khai bình thường. Class con chỉ bắt buộc override các method được đánh dấu là abstract, còn các method thường có thể dùng lại hoặc override
 
-👉 **KHÔNG ĐƯỢC** tạo object (new) từ abstract class
+👉 **KHÔNG ĐƯỢC** tạo object (new) từ abstract class, nhưng có thể dùng làm kiểu dữ liệu cho biến tham chiếu
 
 ### Interface là gì?
 
